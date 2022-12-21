@@ -1,0 +1,6 @@
+/*! 
+* Name: Contact Button Widget
+* Author: Blog Vnit
+* Website: https://www.blogvnit.com
+*/
+function _append(t,s){if("css"==s){var e=document.createElement("link");e.setAttribute("rel","stylesheet"),e.setAttribute("href",t)}void 0!==e&&document.getElementsByTagName("head")[0].appendChild(e)}var is_load=0;function _css_js(){0==is_load&&(is_load=1,_append("https://cdn.jsdelivr.net/gh/leminhut/blogvnit.com/contact/buttons-widget.min.css","css"),$.getScript("https://cdn.jsdelivr.net/gh/leminhut/blogvnit.com/contact/buttons-html.min.js"))}$(window).scroll(function(){_css_js()}),$(window).mousemove(function(){_css_js()}),setTimeout(function(){_css_js()},3e3);
