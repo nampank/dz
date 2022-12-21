@@ -30,7 +30,7 @@ function setBoxText(a) {
             document.getElementById("popWindow").innerHTML = a.replace("100", "<span>" + b + "</span>");
             break;
         case 2:
-            a = "Khách Hàng Đăng Ký Dịch Vụ Mới tại xã  CITY.";
+            a = "Khách hàng đã đặt hàng tại xã  CITY.";
             b = City[Math.floor(Math.random() * City.length)];
             document.getElementById("popWindow").innerHTML = a.replace("CITY",
                 "<b>" + b + "</b>");
