@@ -1,0 +1,302 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// Khai báo l?p SinhVien d? luu tr? thông tin c?a m?t sinh viên
+class SinhVien {
+    private:
+        string maSV; // Mã sinh viên
+        string tenSV; // Tên sinh viên
+        string lopSV; // L?p sinh viên
+        double diemToan; // Ði?m toán
+        double diemLy; // Ði?m lý
+        double diemHoa; // Ði?m hoá
+        double diemVan; // Ði?m van
+        double diemGPA; // Ði?m GPA
+
+    public:
+        // Hàm kh?i t?o m?c d?nh
+        SinhVien() {
+            maSV = "";
+            tenSV = "";
+            lopSV = "";
+            diemToan = 0;
+            diemLy = 0;
+            diemHoa = 0;
+            diemVan = 0;
+            diemGPA = 0;
+        }
+
+        // Hàm kh?i t?o có tham s?
+        SinhVien(string ma, string ten, string lop, double toan, double ly, double hoa, double van) {
+            maSV = ma;
+            tenSV = ten;
+            lopSV = lop;
+            diemToan = toan;
+            diemLy = ly;
+            diemHoa = hoa;
+            diemVan = van;
+            diemGPA = (toan + ly + hoa + van) / 4; // Tính di?m GPA theo công th?c don gi?n
+        }
+
+        // Hàm nh?p thông tin sinh viên t? bàn phím
+        void nhap() {
+            cout << "Nhap ma sinh vien: ";
+            cin >> maSV;
+            cout << "Nhap ten sinh vien: ";
+            cin.ignore(); // B? qua ký t? xu?ng dòng tru?c dó
+            getline(cin, tenSV); // Nh?p chu?i có kho?ng tr?ng
+            cout << "Nhap lop sinh vien: ";
+            cin >> lopSV;
+            cout << "Nhap diem toan: ";
+            cin >> diemToan;
+            cout << "Nhap diem ly: ";
+            cin >> diemLy;
+            cout << "Nhap diem hoa: ";
+            cin >> diemHoa;
+            cout << "Nhap diem van: ";
+            cin >> diemVan;
+            diemGPA = (diemToan + diemLy + diemHoa + diemVan) / 4; // Tính l?i di?m GPA
+        }
+
+        // Hàm xu?t thông tin sinh viên ra màn hình
+        void xuat() {
+            cout << "Ma sinh vien: " << maSV << endl;
+            cout << "Ten sinh vien: " << tenSV << endl;
+            cout << "Lop sinh vien: " << lopSV << endl;
+            cout << "Diem toan: " << diemToan << endl;
+            cout << "Diem ly: " << diemLy << endl;
+            cout << "Diem hoa: " << diemHoa << endl;
+            cout << "Diem van: " << diemVan << endl;
+            cout << "Diem GPA: " << diemGPA << endl;
+        }
+
+        // Hàm tr? v? mã sinh viên
+        string getMaSV() {
+            return maSV;
+        }
+
+        // Hàm tr? v? tên sinh viên
+        string getTenSV() {
+            return tenSV;
+        }
+
+        // Hàm tr? v? l?p sinh viên
+        string getLopSV() {
+            return lopSV;
+             }
+
+        // Hàm tr? v? di?m toán
+        double getDiemToan() {
+            return diemToan;
+        }
+
+        // Hàm tr? v? di?m lý
+        double getDiemLy() {
+            return diemLy;
+        }
+
+        // Hàm tr? v? di?m hoá
+        double getDiemHoa() {
+            return diemHoa;
+        }
+
+        // Hàm tr? v? di?m van
+        double getDiemVan() {
+            return diemVan;
+        }
+
+        // Hàm tr? v? di?m GPA
+        double getDiemGPA() {
+            return diemGPA;
+        }
+};
+
+// Khai báo l?p QuanLySinhVien d? qu?n lý danh sách sinh viên
+class QuanLySinhVien {
+    private:
+        vector<SinhVien> dsSV; // Danh sách sinh viên dùng vector d? luu tr?
+
+    public:
+        // Hàm thêm m?t sinh viên vào danh sách
+        void themSV(SinhVien sv) {
+            dsSV.push_back(sv); // Thêm sinh viên vào cu?i vector
+        }
+
+        // Hàm s?a thông tin m?t sinh viên theo mã sinh viên
+        void suaSV(string ma) {
+            bool timThay = false; // Bi?n c? d? ki?m tra có tìm th?y sinh viên hay không
+            for (int i = 0; i < dsSV.size(); i++) { // Duy?t qua t?ng ph?n t? c?a vector
+                if (dsSV[i].getMaSV() == ma) { // N?u mã sinh viên trùng kh?p
+                    timThay = true; // Ð?t bi?n c? là true
+                    cout << "Tim thay sinh vien co ma " << ma << endl;
+                    cout << "Thong tin cu cua sinh vien:" << endl;
+                    dsSV[i].xuat(); // Xu?t thông tin cu c?a sinh viên
+                    cout << "Nhap thong tin moi cua sinh vien:" << endl;
+                    dsSV[i].nhap(); // Nh?p thông tin m?i c?a sinh viên
+                    break; // Thoát kh?i vòng l?p
+                }
+            }
+            if (!timThay) { // N?u không tìm th?y sinh viên
+                cout << "Khong tim thay sinh vien co ma " << ma << endl;
+            }
+        }
+// Hàm xoá m?t sinh viên kh?i danh sách theo mã sinh viên
+        void xoaSV(string ma) {
+            bool timThay = false; // Bi?n c? d? ki?m tra có tìm th?y sinh viên hay không
+            for (int i = 0; i < dsSV.size(); i++) { // Duy?t qua t?ng ph?n t? c?a vector
+                if (dsSV[i].getMaSV() == ma) { // N?u mã sinh viên trùng kh?p
+                    timThay = true; // Ð?t bi?n c? là true
+                    cout << "Tim thay sinh vien co ma " << ma << endl;
+                    cout << "Thong tin cua sinh vien:" << endl;
+                    dsSV[i].xuat(); // Xu?t thông tin c?a sinh viên
+                    cout << "Ban co chac muon xoa sinh vien nay? (y/n): ";
+                    char chon; // Bi?n d? luu l?a ch?n c?a ngu?i dùng
+                    cin >> chon;
+                    if (chon == 'y' || chon == 'Y') { // N?u ngu?i dùng ch?n y ho?c Y
+                        dsSV.erase(dsSV.begin() + i); // Xoá ph?n t? t?i v? trí i trong vector
+                        cout << "Da xoa sinh vien co ma " << ma << endl;
+                    }
+                    else { // N?u ngu?i dùng ch?n n ho?c N ho?c ký t? khác
+                        cout << "Khong xoa sinh vien co ma " << ma << endl;
+                    }
+                    break; // Thoát kh?i vòng l?p
+                }
+            }
+            if (!timThay) { // N?u không tìm th?y sinh viên
+                cout << "Khong tim thay sinh vien co ma " << ma << endl;
+            }
+        }
+
+        // Hàm xu?t toàn b? danh sách sinh viên ra màn hình
+        void xuatDS() {
+            cout << "Danh sach sinh vien:" << endl;
+            for (int i = 0; i < dsSV.size(); i++) { // Duy?t qua t?ng ph?n t? c?a vector
+                cout << "Sinh vien thu " << i + 1 << ":" << endl;
+                dsSV[i].xuat(); // Xu?t thông tin c?a m?i sinh viên
+                cout << "---------------------" << endl;
+            }
+        }
+
+        // Hàm xu?t danh sách sinh viên theo l?p ra màn hình
+        void xuatDSTheoLop(string lop) {
+            bool timThay = false; // Bi?n c? d? ki?m tra có tìm th?y sinh viên hay không
+            cout << "Danh sach sinh vien lop " << lop << ":" << endl;
+            for (int i = 0; i < dsSV.size(); i++) { // Duy?t qua t?ng ph?n t? c?a vector
+                if (dsSV[i].getLopSV() == lop) { // N?u l?p sinh viên trùng kh?p
+                    timThay = true; // Ð?t bi?n c? là true
+                    cout << "Sinh vien thu " << i + 1 << ":" << endl;
+                    dsSV[i].xuat(); // Xu?t thông tin c?a m?i sinh viên
+                    cout << "---------------------" << endl;
+                }
+            }
+            if (!timThay) { // N?u không tìm th?y sinh viên
+                cout << "Khong co sinh vien nao thuoc lop " << lop << endl;
+            }
+        }
+
+        // Hàm tìm và xu?t thông tin m?t sinh viên theo mã sinh viên
+        void timSVTheoMa(string ma) {
+            bool timThay = false; // Bi?n c? d? ki?m tra có tìm th?y sinh viên hay không
+            for (int i = 0; i < dsSV.size(); i++) { // Duy?t qua t?ng ph?n t? c?a vector
+                if (dsSV[i].getMaSV() == ma) { // N?u mã sinh viên trùng kh?p
+                  timThay = true; // Ð?t bi?n c? là true
+                    cout << "Tim thay sinh vien co ma " << ma << endl;
+                    cout << "Thong tin cua sinh vien:" << endl;
+                    dsSV[i].xuat(); // Xu?t thông tin c?a sinh viên
+                    break; // Thoát kh?i vòng l?p
+                }
+            }
+            if (!timThay) { // N?u không tìm th?y sinh viên
+                cout << "Khong tim thay sinh vien co ma " << ma << endl;
+            }
+        }
+
+        // Hàm s?p x?p danh sách sinh viên theo di?m GPA gi?m d?n
+        void sapXepTheoGPA() {
+            sort(dsSV.begin(), dsSV.end(), [](SinhVien a, SinhVien b) { 
+                return a.getDiemGPA() > b.getDiemGPA();
+            });
+            cout << "Da sap xep danh sach sinh vien theo diem GPA giam dan." << endl;
+        }
+};
+
+// Hàm hi?n th? menu ch?c nang cho ngu?i dùng l?a ch?n
+void menu() {
+    cout << "Chuong trinh quan ly sinh vien" << endl;
+    cout << "1. Them mot sinh vien" << endl;
+    cout << "2. Sua mot sinh vien" << endl;
+    cout << "3. Xoa mot sinh vien" << endl;
+    cout << "4. Xuat toan bo danh sach sinh vien" << endl;
+    cout << "5. Xuat danh sach sinh vien theo lop" << endl;
+    cout << "6. Tim mot sinh vien theo ma" << endl;
+    cout << "7. Sap xep danh sach sinh vien theo diem GPA giam dan" << endl;
+    cout << "0. Thoat chuong trinh" << endl;
+}
+
+// Hàm chính d? ch?y chuong trình
+int main() {
+    QuanLySinhVien qlsv; // T?o m?t d?i tu?ng qu?n lý sinh viên
+    int luaChon; // Bi?n d? luu l?a ch?n c?a ngu?i dùng
+    do {
+        menu(); // Hi?n th? menu ch?c nang
+        cout << "Nhap lua chon cua ban: ";
+        cin >> luaChon; // Nh?p l?a ch?n t? bàn phím
+        switch (luaChon) { // X? lý các tru?ng h?p tuong ?ng v?i l?a ch?n
+            case 1: { // Thêm m?t sinh viên
+                SinhVien sv; // T?o m?t d?i tu?ng sinh viên
+                sv.nhap(); // Nh?p thông tin sinh viên t? bàn phím
+                qlsv.themSV(sv); // Thêm sinh viên vào danh sách qu?n lý
+                break;
+            }
+            case 2: { // S?a m?t sinh viên
+                string ma; // Bi?n d? luu mã sinh viên c?n s?a
+                cout << "Nhap ma sinh vien can sua: ";
+                cin >> ma; // Nh?p mã sinh viên t? bàn phím
+                qlsv.suaSV(ma); // S?a thông tin sinh viên theo mã
+                break;
+            }
+            case 3: { // Xoá m?t sinh viên
+                string ma; // Bi?n d? luu mã sinh viên c?n xoá
+                cout << "Nhap ma sinh vien can xoa: ";
+                cin >> ma; // Nh?p mã sinh viên t? bàn phím
+                qlsv.xoaSV(ma); // Xoá sinh viên theo mã kh?i danh sách qu?n lý
+                break;
+            }
+            case 4: { // Xu?t toàn b? danh sách sinh viên
+                qlsv.xuatDS(); // Xu?t danh sách qu?n lý ra màn hình
+                break;
+            }
+              case 5: { // Xu?t danh sách sinh viên theo l?p
+                string lop; // Bi?n d? luu l?p c?n xu?t
+                cout << "Nhap lop can xuat: ";
+                cin >> lop; // Nh?p l?p t? bàn phím
+                qlsv.xuatDSTheoLop(lop); // Xu?t danh sách sinh viên theo l?p ra màn hình
+                break;
+            }
+            case 6: { // Tìm m?t sinh viên theo mã
+                string ma; // Bi?n d? luu mã sinh viên c?n tìm
+                cout << "Nhap ma sinh vien can tim: ";
+                cin >> ma; // Nh?p mã sinh viên t? bàn phím
+                qlsv.timSVTheoMa(ma); // Tìm và xu?t thông tin sinh viên theo mã
+                break;
+            }
+            case 7: { // S?p x?p danh sách sinh viên theo di?m GPA gi?m d?n
+                qlsv.sapXepTheoGPA(); // S?p x?p danh sách qu?n lý theo di?m GPA gi?m d?n
+                break;
+            }
+            case 0: { // Thoát chuong trình
+                cout << "Cam on ban da su dung chuong trinh." << endl;
+                break;
+            }
+            default: { // L?a ch?n không h?p l?
+                cout << "Lua chon khong hop le. Vui long nhap lai." << endl;
+                break;
+            }
+        }
+    } while (luaChon != 0); // L?p l?i cho d?n khi ngu?i dùng ch?n thoát chuong trình
+    return 0;
+}
